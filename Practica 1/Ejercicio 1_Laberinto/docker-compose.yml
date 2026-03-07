@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  laberinto-app:
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      # Sync your local folder with the container's /app folder
+      - .:/app
+      # Keep the container's node_modules isolated
+      - /app/node_modules

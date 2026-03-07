@@ -1,0 +1,119 @@
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+/* App.css */
+
+/* Centers the entire app and gives it a soft background */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  background-color: #f3f4f6;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  padding: 20px;
+}
+
+.flex-grow{
+  flex-grow: 1;
+}
+
+/* Styles the top bar with the select and buttons */
+.controls-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  align-items: center;
+  background: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Customizes the dropdown menu */
+.styled-select {
+  padding: 10px 35px 10px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: white;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+  transition: border-color 0.2s;
+}
+
+.styled-select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Primary Start Button */
+.btn-primary {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  background-color: #6366f1; /* Indigo */
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  background-color: #4f46e5;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+/* Secondary Reset Button */
+.btn-secondary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #e5e7eb; /* Light Gray */
+  color: #374151;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* Adds a nice card effect around the maze itself */
+.maze-wrapper {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.maze-title {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #111827;
+}
