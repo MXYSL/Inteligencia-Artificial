@@ -2,8 +2,6 @@
 
 # 🧪 Problema de las Jarras
 
-## Comparación de Algoritmos de Búsqueda: **BFS vs DFS**
-
 Aplicación desarrollada en **Python** con interfaz gráfica utilizando **Tkinter** para analizar el comportamiento de algoritmos de búsqueda en el espacio de estados.
 
 </div>
@@ -159,11 +157,11 @@ python jarras.py
 
 <div align="center">
 
-## 👨‍💻 Autor
+##🧑‍💼 Autor
 
 **De la Cruz Velázquez Marco Uriel**
 
-## 🏫 Institución
+## 🏢 Institución
 
 **Escuela Superior de Cómputo (ESCOM)**
 **Ingeniería en Sistemas Computacionales**
