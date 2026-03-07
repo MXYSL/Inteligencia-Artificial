@@ -1,12 +1,6 @@
 
 # 8-Puzzle Solver
 
-### Comparación de Algoritmos de Búsqueda: BFS · DFS · A*
-
-Aplicación interactiva desarrollada en **Python** utilizando **Tkinter** para resolver el problema del **8-Puzzle** y analizar el rendimiento de distintos algoritmos de búsqueda.
-
-
----
 
 # Descripción del Proyecto
 
