@@ -4,6 +4,8 @@
 * Sánchez Gómez Alan Ivan
 */
 
+import { sweetAlertSuccess, sweetAlertError } from "./util";
+
 /**
  * Ejecuta el algoritmo de Búsqueda en Anchura (BFS) para encontrar el camino desde un nodo inicial hasta un nodo final.
  * A la par, interactúa con el DOM para animar la exploración coloreando los nodos evaluados.
@@ -19,6 +21,12 @@ export const bfs = async (graph: Record<string, string[]>, start: string, end: s
     const queue: string[] = [start];
     const parents = new Map<string, string>();
     const delay = duration;
+    
+    // Inicialización de métricas
+    const startTime = performance.now();
+    const startMemory = (performance as any).memory?.usedJSHeapSize || 0;
+    let time_elapsed = 0;
+    let memory_used = 0;
 
     // Colorea el nodo inicial para indicar el inicio de la búsqueda
     const initialNode = document.getElementById(start);
@@ -52,6 +60,14 @@ export const bfs = async (graph: Record<string, string[]>, start: string, end: s
                 }
                 curr = parents.get(curr);
             }
+
+            // Cálculo final de métricas (Éxito)
+            time_elapsed = performance.now() - startTime;
+            memory_used = ((performance as any).memory?.usedJSHeapSize || 0) - startMemory;
+            console.log(`[BFS] Tiempo transcurrido: ${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms | Memoria añadida al Heap: ${memory_used.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} bytes`);
+            sweetAlertSuccess(
+            `Ruta encontrada en <b>${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms</b>.<br><br>Memoria añadida al Heap:<br><b>${memory_used.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} bytes</b>`
+            );
             return path;
         }
 
@@ -68,5 +84,10 @@ export const bfs = async (graph: Record<string, string[]>, start: string, end: s
         }
     }
 
+    // Cálculo final de métricas (Sin ruta encontrada)
+    time_elapsed = performance.now() - startTime;
+    memory_used = ((performance as any).memory?.usedJSHeapSize || 0) - startMemory;
+    console.log(`[BFS] Tiempo transcurrido: ${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms | Memoria añadida al Heap: ${memory_used.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} bytes (Ruta no encontrada)`);
+    sweetAlertError(`No se encontró una ruta después de ${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms`);
     return null;
 };
