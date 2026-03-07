@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 from collections import deque
 import time
+import tracemalloc
 
 # ---------Definicion de Metodos------------
-
 
 def generar_sucesores(estado, cap_a, cap_b):
     x, y = estado
@@ -33,8 +33,13 @@ def reconstruir_camino(padre, estado_final):
     return camino
 
 
+# -------- BFS --------
+
 def bfs(cap_a, cap_b, objetivo):
+
+    tracemalloc.start()
     inicio = time.time()
+
     cola = deque([(0, 0)])
     visitados = set()
     padre = {}
@@ -50,18 +55,30 @@ def bfs(cap_a, cap_b, objetivo):
         x, y = estado
         if x == objetivo or y == objetivo:
             fin = time.time()
-            return reconstruir_camino(padre, estado), fin - inicio, len(visitados)
+
+            memoria_actual, memoria_max = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+
+            memoria_mb = memoria_max / (1024 * 1024)
+
+            return reconstruir_camino(padre, estado), fin - inicio, len(visitados), memoria_mb
 
         for sucesor in generar_sucesores(estado, cap_a, cap_b):
             if sucesor not in visitados:
                 cola.append(sucesor)
                 padre[sucesor] = estado
 
-    return None, None, None
+    tracemalloc.stop()
+    return None, None, None, None
 
+
+# -------- DFS --------
 
 def dfs(cap_a, cap_b, objetivo):
+
+    tracemalloc.start()
     inicio = time.time()
+
     pila = [(0, 0)]
     visitados = set()
     padre = {}
@@ -77,18 +94,24 @@ def dfs(cap_a, cap_b, objetivo):
         x, y = estado
         if x == objetivo or y == objetivo:
             fin = time.time()
-            return reconstruir_camino(padre, estado), fin - inicio, len(visitados)
+
+            memoria_actual, memoria_max = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+
+            memoria_mb = memoria_max / (1024 * 1024)
+
+            return reconstruir_camino(padre, estado), fin - inicio, len(visitados), memoria_mb
 
         for sucesor in generar_sucesores(estado, cap_a, cap_b):
             if sucesor not in visitados:
                 pila.append(sucesor)
                 padre[sucesor] = estado
 
-    return None, None, None
+    tracemalloc.stop()
+    return None, None, None, None
 
 
-#------- FUNCION EJECUTAR (Metodo por colas o por pilas)--------
-
+#------- FUNCION EJECUTAR --------
 
 def ejecutar(tipo):
     try:
@@ -97,15 +120,16 @@ def ejecutar(tipo):
         objetivo = int(entry_obj.get())
 
         if tipo == "BFS":
-            camino, tiempo, explorados = bfs(cap_a, cap_b, objetivo)
+            camino, tiempo, explorados, memoria = bfs(cap_a, cap_b, objetivo)
         else:
-            camino, tiempo, explorados = dfs(cap_a, cap_b, objetivo)
+            camino, tiempo, explorados, memoria = dfs(cap_a, cap_b, objetivo)
 
         resultado_text.delete("1.0", tk.END)
 
         if camino:
             resultado_text.insert(tk.END, f"Algoritmo: {tipo}\n")
             resultado_text.insert(tk.END, f"Tiempo: {tiempo:.6f} segundos\n")
+            resultado_text.insert(tk.END, f"Memoria usada: {memoria:.6f} MB\n")
             resultado_text.insert(tk.END, f"Estados explorados: {explorados}\n\n")
             resultado_text.insert(tk.END, "Camino:\n\n")
 
@@ -117,6 +141,7 @@ def ejecutar(tipo):
     except ValueError:
         messagebox.showerror("Error", "Ingresa solo números enteros.")
 
+
 # -----------CONFIGURACION DE INTERFAZ--------------
 
 ventana = tk.Tk()
@@ -125,6 +150,7 @@ ventana.overrideredirect(True)
 ventana.config(bg="#141421")
 
 # -------- Barra superior --------
+
 barra = tk.Frame(ventana, bg="#1f1f35", height=45)
 barra.pack(fill="x")
 
@@ -147,7 +173,8 @@ tk.Button(barra, text="✕", bg="#1f1f35", fg="#ff4d4d",
           bd=0, command=cerrar,
           font=("Segoe UI", 12, "bold")).pack(side="right")
 
-# Permitir arrastrar
+# Permitir arrastrar ventana
+
 def iniciar_movimiento(event):
     ventana.x = event.x
     ventana.y = event.y
@@ -161,14 +188,15 @@ barra.bind("<Button-1>", iniciar_movimiento)
 barra.bind("<B1-Motion>", mover_ventana)
 
 # -------- Contenedor principal --------
+
 main_frame = tk.Frame(ventana, bg="#141421")
 main_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
-# Configuración de columnas
 main_frame.grid_columnconfigure(0, weight=1)
 main_frame.grid_columnconfigure(1, weight=2)
 
-# -------- Columna izquierda --------
+# -------- Panel izquierdo --------
+
 left_panel = tk.Frame(main_frame, bg="#1c1c2e")
 left_panel.grid(row=0, column=0, sticky="nsew", padx=(0,15))
 
@@ -202,7 +230,8 @@ tk.Button(left_panel, text="Ejecutar DFS",
           width=20,
           command=lambda: ejecutar("DFS")).pack()
 
-# -------- Columna derecha --------
+# -------- Panel derecho --------
+
 right_panel = tk.Frame(main_frame, bg="#1c1c2e")
 right_panel.grid(row=0, column=1, sticky="nsew")
 
