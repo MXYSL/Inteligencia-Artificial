@@ -1,4 +1,3 @@
-<div align="center">
 
 # 8-Puzzle Solver
 
@@ -6,7 +5,6 @@
 
 Aplicación interactiva desarrollada en **Python** utilizando **Tkinter** para resolver el problema del **8-Puzzle** y analizar el rendimiento de distintos algoritmos de búsqueda.
 
-</div>
 
 ---
 
