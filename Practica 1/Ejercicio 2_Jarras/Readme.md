@@ -21,7 +21,7 @@ La aplicación incluye una **interfaz gráfica interactiva** que permite introdu
 
 ---
 
-## 🧠 El Problema de las Jarras
+## El Problema de las Jarras
 
 Se tienen **dos jarras con capacidades distintas** y el objetivo es medir una cantidad específica de agua utilizando únicamente las siguientes operaciones:
 
@@ -157,11 +157,11 @@ python jarras.py
 
 
 
-## 🧑‍💼 Autor
+## Autor
 
 **De la Cruz Velázquez Marco Uriel**
 
-## 🏢 Institución
+## Institución
 
 **Escuela Superior de Cómputo (ESCOM)**
 **Ingeniería en Sistemas Computacionales**
