@@ -32,6 +32,7 @@ Asegúrate de entrar a la carpeta específica donde se encuentra la configuraci�
 `
 cd "Ejercicio 1_Laberinto/"
 `
+
 **3. Construir y levantar el contenedor**
 Ejecuta el siguiente comando. Docker se encargará de descargar la imagen correcta de Node, instalar todas las dependencias (`npm install`) y levantar el servidor de desarrollo:
 `
