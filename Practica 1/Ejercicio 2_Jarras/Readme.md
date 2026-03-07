@@ -1,14 +1,14 @@
-<div align="center">
 
-# 🧪 Problema de las Jarras
+
+# Problema de las Jarras
 
 Aplicación desarrollada en **Python** con interfaz gráfica utilizando **Tkinter** para analizar el comportamiento de algoritmos de búsqueda en el espacio de estados.
 
-</div>
+
 
 ---
 
-## 📌 Descripción del Proyecto
+## Descripción del Proyecto
 
 Este proyecto implementa una solución al **Problema de las Jarras de Agua**, un problema clásico de búsqueda utilizado en Inteligencia Artificial para estudiar estrategias de exploración del espacio de estados.
 
@@ -35,9 +35,9 @@ El objetivo es encontrar una **secuencia de pasos** que permita obtener una cant
 
 ---
 
-## ⚙️ Algoritmos Implementados
+## Algoritmos Implementados
 
-### 🔵 Breadth-First Search (BFS)
+### Breadth-First Search (BFS)
 
 La **búsqueda en anchura** explora el espacio de estados **nivel por nivel**, utilizando una **estructura de datos tipo cola (queue)**.
 
@@ -49,7 +49,7 @@ La **búsqueda en anchura** explora el espacio de estados **nivel por nivel**, u
 
 ---
 
-### 🟣 Depth-First Search (DFS)
+### Depth-First Search (DFS)
 
 La **búsqueda en profundidad** explora primero los estados **más profundos del árbol**, utilizando una **estructura tipo pila (stack)**.
 
@@ -61,19 +61,19 @@ La **búsqueda en profundidad** explora primero los estados **más profundos del
 
 ---
 
-## 📊 Métricas Analizadas
+## Métricas Analizadas
 
 El programa permite comparar el comportamiento de los algoritmos utilizando las siguientes métricas:
 
-### ⏱ Tiempo de Ejecución
+### Tiempo de Ejecución
 
 Se mide el tiempo que tarda cada algoritmo en encontrar una solución.
 
-### 🧠 Memoria Utilizada
+### Memoria Utilizada
 
 Se calcula la memoria máxima utilizada durante la ejecución del algoritmo.
 
-### 🔎 Estados Explorados
+### Estados Explorados
 
 Cantidad de estados visitados durante la búsqueda.
 
@@ -81,7 +81,7 @@ Estas métricas permiten analizar **la eficiencia y el comportamiento de cada al
 
 ---
 
-## 🖥 Interfaz Gráfica
+## Interfaz Gráfica
 
 La interfaz fue desarrollada utilizando **Tkinter**, permitiendo una interacción sencilla con el usuario.
 
@@ -118,7 +118,7 @@ Camino:
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 Proyecto-Jarras/
@@ -141,7 +141,7 @@ Proyecto-Jarras/
 
 ---
 
-## ▶️ Ejecución del Programa
+## Ejecución del Programa
 
 1. Clonar el repositorio o descargar el proyecto.
 2. Ejecutar el archivo principal:
@@ -155,13 +155,7 @@ python jarras.py
 
 ---
 
-
-
-## Autor
-
-**De la Cruz Velázquez Marco Uriel**
-
-## Institución
+**Autor: De la Cruz Velázquez Marco Uriel**
 
 **Escuela Superior de Cómputo (ESCOM)**
 **Ingeniería en Sistemas Computacionales**
