@@ -157,7 +157,7 @@ python jarras.py
 
 <div align="center">
 
-##🧑‍💼 Autor
+## 🧑‍💼 Autor
 
 **De la Cruz Velázquez Marco Uriel**
 
