@@ -270,5 +270,5 @@ python puzzle.py
 
 ---
 
-Autor: Solis Lugo Mayra
-Institución: Escuela Superior de Cómputo (ESCOM) - Ingeniería en Sistemas Computacionales
+# Autor: Solis Lugo Mayra
+# Institución: Escuela Superior de Cómputo (ESCOM) - Ingeniería en Sistemas Computacionales
