@@ -1,122 +1,104 @@
-# Problema de las Jarras 
+<div align="center">
 
-## Descripción
+# 🧪 Problema de las Jarras
 
-Este proyecto implementa una solución al **Problema de las Jarras de Agua** utilizando dos algoritmos de búsqueda clásicos en Inteligencia Artificial:
+## Comparación de Algoritmos de Búsqueda: **BFS vs DFS**
 
-* **Breadth-First Search (BFS)** – Búsqueda en Anchura
-* **Depth-First Search (DFS)** – Búsqueda en Profundidad
+Aplicación desarrollada en **Python** con interfaz gráfica utilizando **Tkinter** para analizar el comportamiento de algoritmos de búsqueda en el espacio de estados.
 
-El programa permite comparar ambos algoritmos en términos de:
-
-* **Tiempo de ejecución**
-* **Memoria utilizada**
-* **Número de estados explorados**
-
-Además, cuenta con una **interfaz gráfica desarrollada en Python utilizando Tkinter**, lo que permite al usuario ingresar las capacidades de las jarras y el objetivo de manera interactiva.
+</div>
 
 ---
 
-## Funcionamiento del Problema
+## 📌 Descripción del Proyecto
 
-El problema consiste en dos jarras con capacidades diferentes y sin marcas de medición. A partir de estas jarras se deben realizar operaciones para obtener una cantidad específica de agua.
+Este proyecto implementa una solución al **Problema de las Jarras de Agua**, un problema clásico de búsqueda utilizado en Inteligencia Artificial para estudiar estrategias de exploración del espacio de estados.
 
-Las operaciones permitidas son:
+El programa permite comparar dos algoritmos fundamentales:
 
-* Llenar una jarra completamente
-* Vaciar una jarra
-* Transferir agua de una jarra a otra hasta llenar o vaciar alguna
+🔹 **Breadth-First Search (BFS)** – Búsqueda en Anchura
+🔹 **Depth-First Search (DFS)** – Búsqueda en Profundidad
 
-El objetivo es encontrar una secuencia de pasos que permita obtener la cantidad de agua deseada en alguna de las jarras.
-
----
-
-## Algoritmos Implementados
-
-### Breadth-First Search (BFS)
-
-BFS explora el espacio de estados **nivel por nivel**, utilizando una **cola (queue)** para almacenar los estados pendientes de explorar.
-
-Características:
-
-* Garantiza encontrar la **solución más corta**
-* Explora más nodos en muchos casos
-* Puede consumir **más memoria**
+La aplicación incluye una **interfaz gráfica interactiva** que permite introducir los valores de las jarras y observar los resultados generados por cada algoritmo.
 
 ---
 
-### Depth-First Search (DFS)
+## 🧠 El Problema de las Jarras
 
-DFS explora el espacio de estados **profundizando lo más posible en cada rama** antes de retroceder, utilizando una **pila (stack)**.
+Se tienen **dos jarras con capacidades distintas** y el objetivo es medir una cantidad específica de agua utilizando únicamente las siguientes operaciones:
 
-Características:
+| Operación    | Descripción                    |
+| ------------ | ------------------------------ |
+| Llenar jarra | Llenar completamente una jarra |
+| Vaciar jarra | Vaciar completamente una jarra |
+| Transferir   | Pasar agua de una jarra a otra |
 
-* Puede encontrar soluciones más rápido en algunos casos
-* Utiliza menos memoria que BFS en ciertos escenarios
-* No siempre encuentra la solución más corta
-
----
-
-## Métricas Analizadas
-
-El programa mide tres métricas importantes para cada algoritmo:
-
-### 1. Tiempo de Ejecución
-
-Se mide utilizando el módulo:
-
-```
-time
-```
-
-Esto permite calcular cuánto tiempo tarda cada algoritmo en encontrar la solución.
+El objetivo es encontrar una **secuencia de pasos** que permita obtener una cantidad específica de agua en alguna de las jarras.
 
 ---
 
-### 2. Memoria Utilizada
+## ⚙️ Algoritmos Implementados
 
-Se utiliza el módulo:
+### 🔵 Breadth-First Search (BFS)
 
-```
-tracemalloc
-```
+La **búsqueda en anchura** explora el espacio de estados **nivel por nivel**, utilizando una **estructura de datos tipo cola (queue)**.
 
-para medir la memoria máxima utilizada durante la ejecución del algoritmo.
+**Características:**
 
-La memoria se muestra en **megabytes (MB)**.
-
----
-
-### 3. Estados Explorados
-
-Se contabiliza el número de estados visitados durante la búsqueda, lo cual permite analizar la eficiencia de cada algoritmo.
+✔ Encuentra la **solución más corta**
+✔ Explora los estados por niveles
+✔ Puede consumir **más memoria**
 
 ---
 
-## Interfaz Gráfica
+### 🟣 Depth-First Search (DFS)
 
-La interfaz está construida con **Tkinter** y permite:
+La **búsqueda en profundidad** explora primero los estados **más profundos del árbol**, utilizando una **estructura tipo pila (stack)**.
 
-* Ingresar la capacidad de la **Jarra A**
-* Ingresar la capacidad de la **Jarra B**
-* Ingresar el **objetivo**
+**Características:**
 
-Además, se incluyen botones para ejecutar:
-
-* **BFS**
-* **DFS**
-
-Los resultados se muestran en el panel derecho con:
-
-* Algoritmo utilizado
-* Tiempo de ejecución
-* Memoria utilizada
-* Estados explorados
-* Camino de solución
+✔ Puede encontrar soluciones rápidamente
+✔ Generalmente usa **menos memoria**
+✔ No siempre encuentra la solución óptima
 
 ---
 
-## Ejemplo de Salida
+## 📊 Métricas Analizadas
+
+El programa permite comparar el comportamiento de los algoritmos utilizando las siguientes métricas:
+
+### ⏱ Tiempo de Ejecución
+
+Se mide el tiempo que tarda cada algoritmo en encontrar una solución.
+
+### 🧠 Memoria Utilizada
+
+Se calcula la memoria máxima utilizada durante la ejecución del algoritmo.
+
+### 🔎 Estados Explorados
+
+Cantidad de estados visitados durante la búsqueda.
+
+Estas métricas permiten analizar **la eficiencia y el comportamiento de cada algoritmo**.
+
+---
+
+## 🖥 Interfaz Gráfica
+
+La interfaz fue desarrollada utilizando **Tkinter**, permitiendo una interacción sencilla con el usuario.
+
+### Funcionalidades de la interfaz:
+
+* Ingreso de **capacidad de la Jarra A**
+* Ingreso de **capacidad de la Jarra B**
+* Definición del **objetivo**
+* Ejecución de **BFS**
+* Ejecución de **DFS**
+* Visualización del **camino solución**
+
+---
+
+## 📷 Ejemplo de Resultados
 
 ```
 Algoritmo: BFS
@@ -138,35 +120,52 @@ Camino:
 
 ---
 
-## Requisitos
-
-Para ejecutar el programa se requiere:
-
-* Python 3.8 o superior
-
-Librerías utilizadas:
+## 📁 Estructura del Proyecto
 
 ```
-tkinter
-collections
-time
-tracemalloc
+Proyecto-Jarras/
+│
+├── jarras.py
+└── README.md
 ```
-
-Todas forman parte de la **biblioteca estándar de Python**, por lo que no es necesario instalar dependencias adicionales.
 
 ---
 
-## Ejecución
+## 🧰 Tecnologías Utilizadas
 
-Para ejecutar el programa:
+| Tecnología        | Uso                   |
+| ----------------- | --------------------- |
+| Python            | Lenguaje principal    |
+| Tkinter           | Interfaz gráfica      |
+| tracemalloc       | Medición de memoria   |
+| time              | Medición de tiempo    |
+| collections.deque | Implementación de BFS |
+
+---
+
+## ▶️ Ejecución del Programa
+
+1. Clonar el repositorio o descargar el proyecto.
+2. Ejecutar el archivo principal:
 
 ```
 python jarras.py
 ```
 
-Se abrirá la interfaz gráfica donde se podrán ingresar los valores y ejecutar los algoritmos.
+3. Ingresar los valores de las jarras y el objetivo.
+4. Ejecutar BFS o DFS para observar los resultados.
 
+---
 
-Autor: De la Cruz Velázquez Marco Uriel
-Institución: Escuela Superior de Cómputo (ESCOM) - Ingeniería en Sistemas Computacionales
+<div align="center">
+
+## 👨‍💻 Autor
+
+**De la Cruz Velázquez Marco Uriel**
+
+## 🏫 Institución
+
+**Escuela Superior de Cómputo (ESCOM)**
+**Ingeniería en Sistemas Computacionales**
+
+</div>
