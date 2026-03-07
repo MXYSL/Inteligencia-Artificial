@@ -1,4 +1,4 @@
-# Problema de las Jarras – Comparación BFS vs DFS
+# Problema de las Jarras 
 
 ## Descripción
 
