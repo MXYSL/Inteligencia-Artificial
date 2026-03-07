@@ -155,7 +155,7 @@ python jarras.py
 
 ---
 
-<div align="center">
+
 
 ## 🧑‍💼 Autor
 
@@ -166,4 +166,3 @@ python jarras.py
 **Escuela Superior de Cómputo (ESCOM)**
 **Ingeniería en Sistemas Computacionales**
 
-</div>
