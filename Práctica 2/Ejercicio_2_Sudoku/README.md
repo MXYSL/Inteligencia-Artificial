@@ -138,9 +138,13 @@ Este proyecto demuestra cómo diferentes enfoques de inteligencia artificial pue
 
 ---
 
-## 📌 Autor
+## 📌 Autores
 
-Proyecto desarrollado como práctica de **Búsqueda Informada** en Inteligencia Artificial.
+ De la Cruz Velázquez Marco Uriel
+ Sanchez Gomez Alan Ivan 
+ Solis Lugo Mayra
+**Escuela Superior de Cómputo (ESCOM)**
+**Ingeniería en Sistemas Computacionales**
 
 ---
 
