@@ -41,8 +41,10 @@ export const dfs = async (graph: Record<string, string[]>, start: string, end: s
         visited.add(node);
         path.push(node);
 
+        //Timer para animación
         await new Promise(resolve => setTimeout(resolve, delay));
 
+        // Si el nodo actual es el nodo objetivo, se marca como parte de la ruta y se retorna true para indicar éxito
         if (node === end) {
             if (currentNode) {
                 currentNode.style.backgroundColor = '#4caf50';
@@ -50,10 +52,12 @@ export const dfs = async (graph: Record<string, string[]>, start: string, end: s
             return true;
         }
 
+        // Recorre los vecinos del nodo actual
         for (const neighbor of graph[node] || []) {
             if (await dfsHelper(neighbor)) return true;
         }
 
+        // Camino sin retorno, pintamos de rojo
         path.pop();
         if (currentNode) {
             currentNode.style.backgroundColor = '#ef5350';
@@ -71,8 +75,8 @@ export const dfs = async (graph: Record<string, string[]>, start: string, end: s
             }
         }
         // Cálculo final de métricas (Éxito)
-            time_elapsed = performance.now() - startTime;
-            memory_used = ((performance as any).memory?.usedJSHeapSize || 0) - startMemory;
+            time_elapsed = performance.now() - startTime; // Tiempo transcurrido en milisegundos
+            memory_used = ((performance as any).memory?.usedJSHeapSize || 0) - startMemory; // Memoria utilizada en bytes
             console.log(`[DFS] Tiempo transcurrido: ${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms | Memoria añadida al Heap: ${memory_used.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} bytes (Ruta encontrada)`);
             sweetAlertSuccess(
             `Ruta encontrada en <b>${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms</b>.<br><br>Memoria añadida al Heap:<br><b>${memory_used.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} bytes</b>`
@@ -80,8 +84,8 @@ export const dfs = async (graph: Record<string, string[]>, start: string, end: s
             return path;
     }
     // Cálculo final de métricas (Sin ruta encontrada)
-    time_elapsed = performance.now() - startTime;
-    memory_used = ((performance as any).memory?.usedJSHeapSize || 0) - startMemory;
+    time_elapsed = performance.now() - startTime; // Tiempo transcurrido en milisegundos
+    memory_used = ((performance as any).memory?.usedJSHeapSize || 0) - startMemory; // Memoria utilizada en bytes
     console.log(`[DFS] Tiempo transcurrido: ${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms | Memoria añadida al Heap: ${memory_used.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} bytes (Ruta no encontrada)`);
     sweetAlertError(`No se encontró una ruta después de ${time_elapsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ms`);
     return null;

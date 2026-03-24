@@ -50,80 +50,198 @@ ARROW = {
 #  LÓGICA DEL PUZZLE
 # ═══════════════════════════════════════════════
 
+# Genera todos los movimientos válidos (sucesores) desde un estado actual del 8-puzzle.
+# 1. Encuentra dónde está el espacio vacío (representado por 0).
+# 2. Prueba los 4 movimientos posibles (arriba, abajo, izquierda, derecha).
+# 3. Descarta los movimientos que harían que la pieza se salga del tablero o "cruce" al otro lado de forma ilegal.
+# 4. Genera el nuevo tablero intercambiando la pieza vacía con la pieza adyacente y lo guarda.
 def sucesores(estado):
+    # 1. Localizar el índice (de 0 a 8) del espacio vacío
     indice = estado.index(0)
     hijos = []
+    
+    # 2. Iterar sobre el diccionario de movimientos (ej. "arriba": -3, "derecha": +1)
     for mov, cambio in MOVIMIENTOS.items():
+        # Calcular a qué posición se movería el espacio vacío
         nuevo = indice + cambio
+        
+        # 3. Validar los límites laterales (Reglas de la cuadrícula)
+        # El módulo 3 (indice % 3) nos da la columna actual (0=Izquierda, 1=Centro, 2=Derecha)
+        # Si está en la columna 0 y se mueve a la izquierda, saltaría a la fila de arriba. Lo evitamos.
         if mov == "izquierda" and indice % 3 == 0: continue
+        # Si está en la columna 2 y se mueve a la derecha, saltaría a la fila de abajo. Lo evitamos.
         if mov == "derecha"   and indice % 3 == 2: continue
+        
+        # Validar los límites verticales (techo y suelo del tablero)
+        # Si el nuevo índice es menor a 0 o mayor a 8, se salió del tablero.
         if nuevo < 0 or nuevo > 8: continue
+        
+        # 4. Generar el nuevo estado
+        # Convertimos la tupla a lista porque las tuplas en Python son inmutables
         lista = list(estado)
+        
+        # Intercambiamos (swap) la posición del 0 con la ficha destino
         lista[indice], lista[nuevo] = lista[nuevo], lista[indice]
+        
+        # Volvemos a convertir a tupla (para que sea hasheable en los diccionarios/sets de visitados)
+        # y guardamos el estado resultante junto con el nombre del movimiento
         hijos.append((tuple(lista), mov))
+        
     return hijos
 
-
+# Determina si una configuración inicial del 8-puzzle tiene solución.
+# 1. Extrae los números en una lista unidimensional, omitiendo el espacio vacío (representado por 0).
+# 2. Compara cada número de la lista con todos los números que están en posiciones posteriores.
+# 3. Cuenta las "inversiones" (cada vez que un número mayor aparece antes que un número menor).
+# 4. Retorna Verdadero si el número total de inversiones es par (el puzzle tiene solución).
 def es_resoluble(estado):
+    # 1. Filtrar el espacio vacío (0)
     lista = [x for x in estado if x != 0]
+    
+    # 2 y 3. Sumar todas las inversiones encontradas
     inv = sum(1 for i in range(len(lista))
                 for j in range(i + 1, len(lista))
                 if lista[i] > lista[j])
+                
+    # 4. Validar la paridad (par = resoluble, impar = irresoluble)
     return inv % 2 == 0
 
-
+# Calcula la "Distancia de Manhattan" total para un estado del 8-puzzle.
+# 1. Inicializa un contador para la distancia total.
+# 2. Recorre cada pieza del tablero usando su índice actual.
+# 3. Ignora el espacio vacío (valor 0), ya que no debe influir en el cálculo.
+# 4. Calcula las coordenadas (fila, columna) actuales de la pieza.
+# 5. Calcula las coordenadas (fila, columna) objetivo donde debería estar la pieza.
+# 6. Suma la distancia entre las coordenadas actuales y las objetivo al total.
 def manhattan(estado):
+    # 1. Inicializar distancia
     dist = 0
+    
+    # 2. Recorrer el tablero (i = índice actual, v = valor de la pieza)
     for i, v in enumerate(estado):
+        
+        # 3. Ignorar el espacio vacío
         if v == 0: continue
+        
+        # 4. Calcular coordenadas actuales (fila, columna)
+        # Nota: (i // 3) da la fila, (i % 3) da la columna en un tablero 3x3
         r1, c1 = divmod(i, v - 1) if False else (i // 3, i % 3)
+        
+        # 5. Calcular coordenadas objetivo (fila, columna)
+        # Restamos 1 al valor (v - 1) porque el número 1 va en el índice 0, el 2 en el 1, etc.
         r2, c2 = (v - 1) // 3, (v - 1) % 3
+        
+        # 6. Calcular distancia de Manhattan y sumar al total
         dist += abs(r1 - r2) + abs(c1 - c2)
+        
     return dist
 
 # ═══════════════════════════════════════════════
 #  ALGORITMOS
 # ═══════════════════════════════════════════════
-
+# Implementación de Búsqueda en Anchura (BFS)
+# 1. Inicializa una cola (FIFO) con el estado inicial, listas vacías para el camino y movimientos, y profundidad 0.
+# 2. Crea un conjunto (set) de estados visitados para evitar ciclos infinitos.
+# 3. Mientras haya estados en la cola, extrae el más antiguo (el menos profundo).
+# 4. Verifica si es el objetivo; si lo es, retorna la ruta completa.
+# 5. Si no, genera sus sucesores, filtra los ya visitados, y agrégalos al final de la cola.
+# Params
+# inicial: estado inicial del puzzle
+# callback: función para actualizar el conteo de nodos (opcional)
 def bfs(inicial, callback=None):
+    # 1. Cola que guarda tuplas: (estado_actual, estados_previos, movimientos_previos, profundidad)
     cola = deque([(inicial, [], [], 0)])
+    
+    # 2. Conjunto de memoria rápida para los estados que ya exploramos
     visitados = {inicial}
+    
     while cola:
+        # 3. Obtener el estado actual de la cola (FIFO: el primero en entrar es el primero en salir)
         estado, camino, movs, prof = cola.popleft()
+
+        # Si se proporciona un callback para contar nodos, se llama aquí (útil para interfaces gráficas)
         if callback: callback()
+
+        # 4. Verificar si el estado actual es el objetivo
         if estado == OBJETIVO:
+            # Retorna el camino de estados (incluyendo el final), la lista de movimientos y la cantidad de pasos
             return camino + [estado], movs, prof
+        
+        # 5. Si no es el objetivo, genera sucesores y agrega a la cola los no visitados
         for hijo, mov in sucesores(estado):
             if hijo not in visitados:
                 visitados.add(hijo)
+                # Al encolar, heredamos la historia del padre y le sumamos el paso actual
                 cola.append((hijo, camino + [estado], movs + [mov], prof + 1))
+                
+    # Retorna valores nulos si la cola se vacía y no se encontró solución
     return None, None, None
 
+# Implementación de Búsqueda en Profundidad (DFS)
+# 1. Inicializa una pila (LIFO) con el estado inicial. Se usa una lista estándar de Python.
+# 2. Crea un conjunto (set) vacío para los estados visitados.
+# 3. Mientras haya estados en la pila, extrae el más reciente (el último que se agregó).
+# 4. Verifica si es el objetivo; si lo es, retorna la ruta completa.
+# 5. Si el estado actual no ha sido procesado, lo marca como visitado.
+# 6. Genera sus sucesores y los agrega al final de la pila para explorarlos inmediatamente.
+# Params
+# inicial: estado inicial del puzzle
+# callback: función para actualizar el conteo de nodos (opcional)
 def dfs(inicial, callback=None):
+    # 1. Pila que guarda tuplas: (estado_actual, estados_previos, movimientos_previos, profundidad)
     pila = [(inicial, [], [], 0)]
+    
+    # 2. Conjunto para registrar los estados que ya procesamos y evitar ciclos
     visitados = set()
+    
     while pila:
+        # 3. Obtener el estado actual de la pila (LIFO: el último en entrar es el primero en salir)
         estado, camino, movs, prof = pila.pop()
+
+        # Si se proporciona un callback para contar nodos, se llama aquí
         if callback: callback()
+
+        # 4. Verificar si el estado actual es el objetivo
         if estado == OBJETIVO:
+            # Retorna la ruta completa hasta la meta
             return camino + [estado], movs, prof
+        
+        # 5. Asegurarnos de no procesar un estado por el que ya pasamos
         if estado not in visitados:
             visitados.add(estado)
+            
+            # 6. Generar sucesores y agregarlos a la pila
             for hijo, mov in sucesores(estado):
+                # Se apilan con la historia acumulada y un nivel más de profundidad
                 pila.append((hijo, camino + [estado], movs + [mov], prof + 1))
+                
+    # Retorna valores nulos si la pila se vacía (no hay solución)
     return None, None, None
 
+
+#Params
+# inicial: estado inicial del puzzle
+# callback: función para actualizar el conteo de nodos (opcional)
 def astar(inicial, callback=None):
     heap = []
     heapq.heappush(heap, (0, inicial, [], [], 0))
     visitados = set()
     while heap:
+        # Obtener el estado actual de la cola de prioridad
         f, estado, camino, movs, prof = heapq.heappop(heap)
+
+        # Si se proporciona un callback para contar nodos, se llama aquí
         if callback: callback()
+
+        # Verificar si el estado actual es el objetivo
         if estado == OBJETIVO:
             return camino + [estado], movs, prof
+        
+        # Si no es el objetivo, genera sucesores y agrega a la cola de prioridad los no visitados
         if estado in visitados: continue
         visitados.add(estado)
+
+        # Generar sucesores y agregar a la cola de prioridad los no visitados
         for hijo, mov in sucesores(estado):
             g = prof + 1
             h = manhattan(hijo)

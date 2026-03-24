@@ -6,35 +6,59 @@ import tracemalloc
 
 # ---------Definicion de Metodos------------
 
+# Genera todas las posibles combinaciones a realizar desde un estado
+# 1. Llenar por completo cualquiera de las jarras (A o B).
+# 2. Vaciar por completo cualquiera de las jarras (A o B).
+# 3. Transferir agua de la jarra A a la B (hasta vaciar A o llenar B).
+# 4. Transferir agua de la jarra B a la A (hasta vaciar B o llenar A).
 def generar_sucesores(estado, cap_a, cap_b):
     x, y = estado
     sucesores = []
 
-    sucesores.append((cap_a, y))
-    sucesores.append((x, cap_b))
-    sucesores.append((0, y))
-    sucesores.append((x, 0))
+    # 1. Llenar jarras
+    sucesores.append((cap_a, y)) # Llenar jarra A
+    sucesores.append((x, cap_b)) # Llenar jarra B
+    
+    # 2. Vaciar jarras
+    sucesores.append((0, y))     # Vaciar jarra A
+    sucesores.append((x, 0))     # Vaciar jarra B
 
+    # 3. Transferir de A hacia B
     transferir = min(x, cap_b - y)
     sucesores.append((x - transferir, y + transferir))
 
+    # 4. Transferir de B hacia A
     transferir = min(y, cap_a - x)
     sucesores.append((x + transferir, y - transferir))
 
     return sucesores
 
-
+# Función para reconstruir el camino (para imprimir)
+# Recibe al estado final y un diccionario con los padres de cada estado.
+# 1. Iniciar el camino con el estado final (objetivo alcanzado).
+# 2. Rastrear hacia atrás buscando el estado predecesor (el "padre") del estado actual.
+# 3. Añadir cada estado predecesor a la lista del camino hasta llegar al estado inicial (que no tiene padre).
+# 4. Invertir la lista para que el orden sea cronológico (del estado inicial al final).
 def reconstruir_camino(padre, estado_final):
+    # 1. Iniciar el camino
     camino = [estado_final]
+    
+    # 2 y 3. Rastrear hacia atrás y añadir a la lista
     while estado_final in padre:
-        estado_final = padre[estado_final]
+        estado_final = padre[estado_final] # Padre de nodo actual
         camino.append(estado_final)
+        
+    # 4. Invertir el camino
     camino.reverse()
+    
     return camino
 
 
 # -------- BFS --------
-
+# params
+# cap_a: capacidad de la jarra A
+# cap_b: capacidad de la jarra B
+# objetivo: cantidad de agua que se desea obtener en alguna de las jarras
 def bfs(cap_a, cap_b, objetivo):
 
     tracemalloc.start()
@@ -45,13 +69,17 @@ def bfs(cap_a, cap_b, objetivo):
     padre = {}
 
     while cola:
+        # Obtener el estado actual de la cola
         estado = cola.popleft()
 
+        # Si el estado ya ha sido visitado, se omite
         if estado in visitados:
             continue
-
+        
+        # Marcar el estado como visitado
         visitados.add(estado)
 
+        # Verificar si el estado actual cumple con el objetivo
         x, y = estado
         if x == objetivo or y == objetivo:
             fin = time.time()
@@ -61,8 +89,11 @@ def bfs(cap_a, cap_b, objetivo):
 
             memoria_mb = memoria_max / (1024 * 1024)
 
+            # Reconstruir el camino desde el estado final hasta el estado inicial 
+            # Retorna camino, tiempo, nodos visitados, memoria
             return reconstruir_camino(padre, estado), fin - inicio, len(visitados), memoria_mb
 
+        # Si el estado no es el objetivo, genera sucesores y agrega a la cola los no visitados
         for sucesor in generar_sucesores(estado, cap_a, cap_b):
             if sucesor not in visitados:
                 cola.append(sucesor)
@@ -73,7 +104,10 @@ def bfs(cap_a, cap_b, objetivo):
 
 
 # -------- DFS --------
-
+# params
+# cap_a: capacidad de la jarra A
+# cap_b: capacidad de la jarra B
+# objetivo: cantidad de agua que se desea obtener en alguna de las jarras
 def dfs(cap_a, cap_b, objetivo):
 
     tracemalloc.start()
@@ -115,10 +149,11 @@ def dfs(cap_a, cap_b, objetivo):
 
 def ejecutar(tipo):
     try:
-        cap_a = int(entry_a.get())
-        cap_b = int(entry_b.get())
-        objetivo = int(entry_obj.get())
+        cap_a = int(entry_a.get())      # Capacidad de Jarra A
+        cap_b = int(entry_b.get())      # Capacidad de Jarra B
+        objetivo = int(entry_obj.get()) # Capacidad objetivo
 
+        # Determinar algoritmo a ejecutar
         if tipo == "BFS":
             camino, tiempo, explorados, memoria = bfs(cap_a, cap_b, objetivo)
         else:
@@ -126,6 +161,7 @@ def ejecutar(tipo):
 
         resultado_text.delete("1.0", tk.END)
 
+        # Impresión de resultados
         if camino:
             resultado_text.insert(tk.END, f"Algoritmo: {tipo}\n")
             resultado_text.insert(tk.END, f"Tiempo: {tiempo:.6f} segundos\n")
@@ -146,7 +182,7 @@ def ejecutar(tipo):
 
 ventana = tk.Tk()
 ventana.geometry("900x550")
-ventana.overrideredirect(True)
+#ventana.overrideredirect(True)
 ventana.config(bg="#141421")
 
 # -------- Barra superior --------

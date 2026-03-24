@@ -28,9 +28,10 @@ export const mazeToGraph = (maze: MazeCell[][]): Record<string, string[]> => {
   
   for (let row of maze) {
     for (let cell of row) {
-      const key = `${cell.x}-${cell.y}`;
-      graph[key] = [];
+      const key = `${cell.x}-${cell.y}`;  //Guardo el nodo actual en el formato x-y
+      graph[key] = [];                    // Declaro el grafo como vacío para guardar el resultado
       
+      // Por cada estado reviso si tiene borde y sino, el camino es libre, se agrega
       if (!cell.top) graph[key].push(`${cell.x}-${cell.y - 1}`);
       if (!cell.right) graph[key].push(`${cell.x + 1}-${cell.y}`);
       if (!cell.bottom) graph[key].push(`${cell.x}-${cell.y + 1}`);
@@ -64,8 +65,9 @@ export const sweetAlertSuccess = (message: string) => {
     position: 'top-end',
     icon: 'success',
     title: '¡Éxito! Detalles en la consola',
-    html: message, // <--- Cambiado de 'text' a 'html'
-    showConfirmButton: false,
+    html: message,
+    showConfirmButton: true,
+    confirmButtonText: 'Cerrar',
     timer: 10000,
     timerProgressBar: true,
     didOpen: (toast) => {
@@ -84,8 +86,9 @@ export const sweetAlertError = (message: string) => {
     position: 'top-end',
     icon: 'error',
     title: '¡Error! Detalles en la consola',
-    html: message, // <--- Cambiado de 'text' a 'html'
-    showConfirmButton: false,
+    html: message,
+    showConfirmButton: true,
+    confirmButtonText: 'Cerrar',
     timer: 10000,
     timerProgressBar: true,
     didOpen: (toast) => {
