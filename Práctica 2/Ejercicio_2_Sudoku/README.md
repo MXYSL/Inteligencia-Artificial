@@ -1,8 +1,8 @@
-# 🧩 Sudoku Solver con A* y Recocido Simulado
+# 🧩 Sudoku con A* y Recocido Simulado
 
-## 📌 Descripción del proyecto
+## 📌 Descripción del ejercicio 
 
-Este proyecto consiste en el desarrollo de una aplicación en Python con interfaz gráfica que permite resolver tableros de Sudoku utilizando dos algoritmos de inteligencia artificial:
+Este ejercicio consiste en el desarrollo de una aplicación en Python con interfaz gráfica que permite resolver tableros de Sudoku utilizando dos algoritmos de inteligencia artificial:
 
 * 🔍 **A*** (búsqueda informada)
 * 🔥 **Recocido Simulado** (Simulated Annealing)
