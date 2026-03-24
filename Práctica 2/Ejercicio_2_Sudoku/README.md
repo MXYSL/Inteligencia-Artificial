@@ -140,9 +140,9 @@ Este proyecto demuestra cómo diferentes enfoques de inteligencia artificial pue
 
 ## 📌 Autores
 
- De la Cruz Velázquez Marco Uriel
- Sanchez Gomez Alan Ivan 
- Solis Lugo Mayra
+**De la Cruz Velázquez Marco Uriel**
+**Sanchez Gomez Alan Ivan**
+**Solis Lugo Mayra**
 **Escuela Superior de Cómputo (ESCOM)**
 **Ingeniería en Sistemas Computacionales**
 
